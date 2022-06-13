@@ -1,4 +1,4 @@
-from opcodes import AND, ADD, ISZERO, SLT, SGT
+from opcodes import AND, ISZERO, SLT, SGT, SUB
 from rule import Rule
 from util import BVSignedMax, BVSignedMin, BVSignedUpCast
 from z3 import BitVec, BVSubNoOverflow, BVSubNoUnderflow, Not
@@ -35,7 +35,7 @@ while type_bits <= n_bits:
 	if type_bits == 256:
 		underflow_check = AND(ISZERO(SLT(Y, 0)), SGT(diff, X))
 		overflow_check = AND(SLT(Y, 0), SLT(diff, X))
-	else
+	else:
 		underflow_check = AND(ISZERO(SLT(Y, 0)), SLT(diff, minValue))
 		overflow_check = AND(SLT(Y, 0), SGT(diff, maxValue))
 
