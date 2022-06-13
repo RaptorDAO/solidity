@@ -12,6 +12,7 @@ Language Features:
 Compiler Features:
  * LSP: Add rudimentary support for semantic highlighting.
  * Yul Optimizer: Improve inlining heuristics for via IR code generation and pure Yul compilation.
+ * Overflow/Underflow: Overflow/Underflow checks are now performed after, instead of before, the actual addition or subtraction operation is performed.
 
 
 Bugfixes:
