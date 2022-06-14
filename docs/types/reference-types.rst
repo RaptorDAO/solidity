@@ -468,14 +468,15 @@ Array Members
         }
     }
 
-.. index:: ! array;slice
+.. index:: ! array;dangling storage references
 
 Dangling References to Storage Array Elements
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 When working with storage arrays, you need to take care to avoid dangling references.
-A dangling reference can for example occur, if you store a reference to an array element in
-a local variable and then ``.pop()`` from the containing array:
+A dangling reference is a reference that points to something that no longer exists or has been
+moved without updating the reference. A dangling reference can for example occur, if you store a
+reference to an array element in a local variable and then ``.pop()`` from the containing array:
 
 .. code-block:: solidity
 
@@ -512,18 +513,18 @@ Dangling references can also occur when using complex expressions in tuple assig
     // SPDX-License-Identifier: GPL-3.0
     pragma solidity >=0.8.0 <0.9.0;
 
-   contract C {
+    contract C {
         uint[] s;
         uint[] t;
         constructor() {
-           // Push some initial values to the storage arrays.
-           s.push(0x07);
-           t.push(0x03);
+            // Push some initial values to the storage arrays.
+            s.push(0x07);
+            t.push(0x03);
         }
 
         function g() internal returns (uint[] storage) {
-             s.pop();
-             return t;
+            s.pop();
+            return t;
         }
 
         function f() public returns (uint[] memory) {
@@ -543,15 +544,15 @@ It is always safer to only assign to storage once per statement and to avoid
 complex expressions on the left-hand-side of an assignment.
 
 You need to take particular care when dealing with references to elements of
-``bytes`` arrays, since a ``.push()`` on a bytes array may switch from short
-to long layout in storage.
+``bytes`` arrays, since a ``.push()`` on a bytes array may switch :ref:`from short
+to long layout in storage<bytes-and-string>`.
 
 .. code-block:: solidity
 
     // SPDX-License-Identifier: GPL-3.0
     pragma solidity >=0.8.0 <0.9.0;
 
-   contract C {
+    contract C {
         bytes x = "012345678901234567890123456789";
 
         function test() external returns(uint) {
@@ -576,7 +577,7 @@ involves dangling references.
 
 Be sure to avoid dangling references in your code!
 
-.. index:: ! array;dangling storage references
+.. index:: ! array;slice
 
 .. _array-slices:
 
